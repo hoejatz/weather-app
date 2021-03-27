@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Conditions from '../Conditions/Conditions';
 
 export default function Forecast(props) {
     
@@ -24,10 +25,8 @@ export default function Forecast(props) {
     return (
         <div>
             <h2>Find Current Weather Conditions</h2>
-            <div>
-                {JSON.stringify(responseObject)}
-            </div>
             <button onClick={getForecast}>Get Forecast</button>
+            <Conditions responseObject={responseObject}/>
         </div>
     )
 
