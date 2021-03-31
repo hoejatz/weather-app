@@ -1,8 +1,11 @@
+import classes from './Conditions.module.css';
 import React from 'react';
 
 export default function Conditions(props) {
     return (
-        <div>
+        <div className={classes.Wrapper}>
+            {props.error && <small>Please enter a valid city</small>}
+            {props.loading && <div>Loading...</div>}
             {props.responseObject.cod === 200 ? 
                 <div>
                     <p><strong>{props.responseObject.name}</strong></p>
