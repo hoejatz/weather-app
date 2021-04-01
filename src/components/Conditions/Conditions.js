@@ -4,7 +4,7 @@ import React from 'react';
 export default function Conditions(props) {
     return (
         <div className={classes.Wrapper}>
-            {props.error && <small>Please enter a valid city</small>}
+            {props.error && <small className={classes.Small}>Please enter a valid city</small>}
             {props.loading && <div>Loading...</div>}
             {props.responseObject.cod === 200 ? 
                 <div>
