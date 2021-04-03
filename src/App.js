@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Forecast from "./components/Forecast/Forecast";
+import WeekContainer from "./components/WeekContainer/WeekContainer";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       </header>
       <main>
         <Forecast />
+        <WeekContainer />
       </main>
       <footer>
         Hatzilla Production
