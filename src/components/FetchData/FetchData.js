@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Conditions from '../Conditions/Conditions';
-import classes from './Forecast.module.css';
+import axios from 'axios';
+import CurrentConditions from '../CurrentConditions/CurrentConditions';
+import classes from './FetchData.module.css';
 
-export default function Forecast(props) {
+const API_KEY = process.env.REACT_APP_OMW_API_KEY;
+
+export default function FetchData(props) {
     
     let [responseObject, setResponseObject] = useState({});
     let [city, setCity] = useState('');
@@ -10,26 +13,33 @@ export default function Forecast(props) {
     let [error, setError] = useState(false);
     let [loading, setLoading] = useState(false);
 
-
     function getForecast(event) {
         event.preventDefault();
         
         if (city.length === 0) {
             return setError(true);
         }
-
+       
         setError(false);
         setResponseObject({});
         setLoading(true);
         let uriEncodedCity = encodeURIComponent(city);
+    
+        const currentConditionsURL = `https://api.openweathermap.org/data/2.5/weather?q=${uriEncodedCity}&units=${unit}&appid=${API_KEY}`;
+        const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${uriEncodedCity}&units=${unit}&appid=${API_KEY}`;
+
+        const getCurrentConditions = axios.get(currentConditionsURL)
+        const getForecast = axios.get(forecastURL)
+        axios.all(getCurrentConditions, getForecast).then(
+            axios.spread((...allData) => {
+                const allCurrentConditionsData = allData[0]
+                const allForecastData = allData[1]
+
+                console.log(allCurrentConditionsData)
+                console.log(allForecastData)
+            })
+        )
         
-        fetch(`https://community-open-weather-map.p.rapidapi.com/weather?q=${uriEncodedCity}&units=${unit}`, {
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-key": process.env.REACT_APP_API_KEY,
-                "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com"
-            }
-        })
         .then(response => response.json())
         .then(response => {
             if (response.cod !== 200) {
@@ -43,8 +53,11 @@ export default function Forecast(props) {
             setLoading(false);
             console.error(error);
         });
+
     }
 
+
+    
     return (
         <div>
             <h2>Find Current Weather Conditions</h2>
@@ -79,12 +92,11 @@ export default function Forecast(props) {
                 </label>
                 <button className={classes.Button} type="submit">Get Forecast</button>
             </form>
-            <Conditions 
+            <CurrentConditions 
                 responseObject={responseObject}
                 error={error}
                 loading={loading}
                 />
         </div>
     )
-
 }

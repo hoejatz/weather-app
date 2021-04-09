@@ -1,7 +1,7 @@
-import classes from './Conditions.module.css';
+import classes from './CurrentConditions.module.css';
 import React from 'react';
 
-export default function Conditions(props) {
+export default function CurrentConditions(props) {
     return (
         <div className={classes.Wrapper}>
             {props.error && <small className={classes.Small}>Please enter a valid city</small>}
