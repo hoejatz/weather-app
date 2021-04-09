@@ -42,13 +42,11 @@ const DayCard = ({dt, temp_min, temp_max, main, icon}) => {
       />
       <Card.Body>
         <Card.Title>{main}</Card.Title>
-        {/*  datetime is received in milliseconds, let's turn into local date time */}
+        {/*  datetime is received in milliseconds */}
         <p>
           {date.toLocaleDateString()} - {date.toLocaleTimeString()}
         </p>
-        {/* minimum temperature */}
         <p>Min: {temp_min}</p>
-        {/* maximum temperature */}
         <p>Max: {temp_max}</p>
       </Card.Body>
     </Card>
