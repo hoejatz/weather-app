@@ -1,7 +1,7 @@
 import './App.css';
 import Wrapper from "./components/Wrapper";
 import FetchData from "./components/FetchData/FetchData";
-import WeatherList from "./components/WeatherList/WeatherList";
+
 import DayCard from './components/DayCard/DayCard';
 
 function App() {
@@ -13,16 +13,9 @@ function App() {
         </header>
         <main>
           <FetchData />
-          <DayCard
-            dt={1602104400 * 1000}
-            temp_min="22.67"
-            temp_max="24.39"
-            main="Clear"
-            icon="01d"
-          />
         </main>
         <footer>
-          Hatzilla Production
+          Hatzilazaridis Production
         </footer>
       </div>
     </Wrapper>

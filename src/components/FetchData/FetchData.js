@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import CurrentConditions from '../CurrentConditions/CurrentConditions';
+import WeatherList from "../WeatherList/WeatherList";
 import classes from './FetchData.module.css';
 
 const API_KEY = process.env.REACT_APP_OMW_API_KEY;
@@ -8,6 +9,7 @@ const API_KEY = process.env.REACT_APP_OMW_API_KEY;
 export default function FetchData(props) {
     
     let [responseObjCurrentConditions, setResponseObjCurrentConditions] = useState({});
+    let [responseObjForecast, setResponseObjForecast] = useState({});
     let [city, setCity] = useState('');
     let [unit, setUnit] = useState('imperial');
     let [error, setError] = useState(false);
@@ -22,6 +24,7 @@ export default function FetchData(props) {
        try {
         setError(false);
         setResponseObjCurrentConditions({});
+        setResponseObjForecast({});
         setLoading(true);
         let uriEncodedCity = encodeURIComponent(city);
         
@@ -29,14 +32,15 @@ export default function FetchData(props) {
         const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${uriEncodedCity}&units=${unit}&appid=${API_KEY}`;
         
         const getCurrentConditionsRequest = axios.get(currentConditionsURL)
-        // const getForecastRequest = axios.get(forecastURL)
+        const getForecastRequest = axios.get(forecastURL)
         const getCurrentConditionsResponse = await getCurrentConditionsRequest
-        // const getForecastResponse = await getForecastRequest
+        const getForecastResponse = await getForecastRequest
         
         console.log(getCurrentConditionsResponse)
-        // console.log(getForecastResponse)
+        console.log(getForecastResponse)
         
         setResponseObjCurrentConditions(getCurrentConditionsResponse);
+        setResponseObjForecast(getForecastResponse)
         setLoading(false);
        
     } catch (error) {
@@ -86,7 +90,20 @@ export default function FetchData(props) {
                     error={error}
                     loading={loading}
                     />
+                <WeatherList 
+                    responseObjForecast={responseObjForecast}
+                    error={error}
+                    loading={loading}
+                />
         </div>
         )
     }
     
+
+              {/* <DayCard
+            dt={1602104400 * 1000}
+            temp_min="22.67"
+            temp_max="24.39"
+            main="Clear"
+            icon="01d"
+          /> */}
